@@ -1,0 +1,25 @@
+<header class="headerBox">
+    <h1>
+        Preentrega
+    </h1>
+    <div class="cart">
+        
+    </div>
+</header>
+
+
+
+<div class="productsBox">
+  
+
+{{#each products}}
+<ul class="prodUl">
+    <li>{{this.title}}</li>
+    <li>$ {{this.price}}</li>
+    <li>
+        <img class="img" src="{{this.url}}" alt="foto">
+    </li>
+</ul>
+{{/each}}
+
+</div>
