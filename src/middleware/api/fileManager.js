@@ -6,7 +6,7 @@ const cartsPath = __dirname + '/db/carts.json';
 /* -----------CLASE------------ */
 
 export class Container {
-   
+
 
     /* -----------Funciones------------ */
     getAll = async () => {
@@ -14,10 +14,12 @@ export class Container {
     }
 
     save = async (object) => {
-        const data = await this.getAll();
+        console.log('llegaste hasta aca: ' + object.id);
+        let data = await this.getAll();
         if (data.length) {
             //si ya hay productos el id es el siguiente num
             const prod = await { ...object, id: data[data.length - 1].id + 1 };
+            data.push(prod);
         } else {
             //si no, empieza desde 1
             const prod = await { ...object, id: 1 };
@@ -60,7 +62,7 @@ export class Container {
                 return [];
             }
         } catch (e) {
-            console.log(`Error: ${e}`);
+            console.log(`Error get products: ${e}`);
             return [];
         }
     }
@@ -69,7 +71,7 @@ export class Container {
         try {
             await fs.promises.writeFile(productsPath, JSON.stringify(data, null, '\t'));
         } catch (e) {
-            console.log(`Error: ${e}`);
+            console.log(`Error save : ${e}`);
         }
     }
 
@@ -79,22 +81,42 @@ export class Container {
         // console.log('id: ', id);
         let item = data.find(prod => prod.id === id);
         // console.log(item);
-        if(item) {
+        if (item) {
             item.title = title;
             item.price = price;
             item.thumbnail = thumbnail;
         }
         let itemUp = data.findIndex(prod => parseInt(prod.id) === parseInt(item.id));
         // console.log(itemUp);
-        data.splice(itemUp,1,item)
-        console.log('Updated: ',data);
+        data.splice(itemUp, 1, item)
+        console.log('Updated: ', data);
         await this.deleteAll();
         await this.save(data);
     }
- 
+
 
     ////CARRO
- 
+
+    deleteAllCarts = async () => {
+        const emptyArray = [];
+        await this.saveCart(emptyArray);
+    }
+
+    saveCarts = async (object) => {
+        console.log('llegaste hasta aca: ' + object.id);
+        let data = await this.getCarts();
+        if (data.length) {
+            //si ya hay productos el id es el siguiente num
+            const prod = await { ...object, id: data[data.length - 1].id + 1 };
+            data.push(prod);
+        } else {
+            //si no, empieza desde 1
+            const prod = await { ...object, id: 1 };
+            data.push(prod); //pusheo en data el producto
+        }
+        return await this.saveCart(data);
+    }
+
 
     saveCart = async (data) => {
         try {
@@ -104,10 +126,13 @@ export class Container {
         }
     }
 
+    getAllCart = async () => {
+        return await this.getCarts();
+    }
 
     getCarts = async () => {
         try {
-            if (fs.existsSync(productsPath)) {
+            if (fs.existsSync(cartsPath)) {
                 const data = await fs.promises.readFile(cartsPath, 'utf-8');
                 return JSON.parse(data);
             } else {

@@ -1,18 +1,18 @@
 [
-    {    
-        "id":1,
+    {
+        "id": 1,
         "title": "zapatilla Adidas",
         "price": 5000,
         "thumbnail": "https://static.runnea.com/images/202111/adidas-eq21-run-ficha-400x400x80xX.jpg?1"
     },
     {
-        "id":2,
+        "id": 2,
         "title": "zapatilla Nike",
         "price": 7000,
         "thumbnail": "https://www.dexter.com.ar/on/demandware.static/-/Sites-dabra-catalog/default/dw5d2cf9e4/products/NI_DC3728-003/NI_DC3728-003-1.JPG"
     },
     {
-        "id":3,
+        "id": 3,
         "title": "zapatilla Puma",
         "price": 3000,
         "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjjp82l1QS66q0CFS8rZNoqSZLtsPeqHFovskslOI9n3eXEZwv8mE63nQ2locua-bXj7M&usqp=CAU"

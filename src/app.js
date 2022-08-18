@@ -14,7 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 8080; //para glitch
 
 const server = app.listen(PORT, ()=>{
-    console.log('Listening on PORT'+PORT);
+    console.log('Listening on PORT '+PORT);
 })
 server.on('error',(e)=>console.log(`Server error: ${e}`));
 
@@ -30,7 +30,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static(__dirname + '/public'));
 
 app.use('/', viewsRouter);
-app.use('/', productsRouter)
+app.use('/api/products', productsRouter)
 
 app.use('/api/carts', cartsRouter);
 
