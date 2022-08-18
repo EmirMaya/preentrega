@@ -72,6 +72,9 @@ router.put('/:id', async (req, res) => {
         let id = parseInt(req.params.id);
 
         let item = products.find(prod => prod.id == id);
+        let title = "adidas"
+        let price = 20000
+        let thumbnail = 'no image'
         console.log(item);
         if (item) {
             item.title = title;
@@ -82,11 +85,9 @@ router.put('/:id', async (req, res) => {
         // console.log(itemUp);
         products.splice(itemUp, 1, item)
         console.log('Updated: ', products);
-        let nproducts = await db.deleteAll();
-        let sproducts = await db.save(products);
-        console.log('NPRODUCTS' + nproducts);
-        console.log('SPRODUCTS' + sproducts);
-        res.send(sproducts);
+        await db.deleteAll();
+        await db.save(products);
+        res.send(products);
     } catch (e) {
         console.log('ERROR PUT: ' + e);
     }
@@ -98,8 +99,11 @@ router.delete('/:id', async (req, res) => {
         let products = await db.getAll()
         if (isNaN(req.params.id)) return res.status(400).send("El parámetro debe ser númerico")
         if (parseInt(req.params.id) < 1 || parseInt(req.params.id) > products.length) return res.status(404).send({ error: 'producto no encontrado' })
-        products = [];
-        res.send(products);
+        const newArray = products.filter(prod => prod.id != id);
+        console.log(newArray);
+        await db.saveCart(newArray);
+        res.send(newArray);
+    
     } catch (e) {
         console.log('ERROR DELETE: ' + e);
     }
